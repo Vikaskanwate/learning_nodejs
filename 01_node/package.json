@@ -1,0 +1,13 @@
+{
+  "name": "01_node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start":"node index.js",
+    "vikas":"echo \"hi\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vikas kanwate",
+  "license": "ISC",
+  "description": ""
+}
