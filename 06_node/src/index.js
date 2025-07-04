@@ -6,6 +6,8 @@ const port = 3000
 
 connectDB();
 
+app.use(express.json());
+
 app.use('/api',productRouter);
 
 app.listen(port, () => {
