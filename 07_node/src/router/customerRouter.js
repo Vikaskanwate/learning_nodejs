@@ -4,7 +4,12 @@ const {getCustomers, createCustomer, updateCustomer, deleteCustomer} = require('
 
 router.get("/",getCustomers);
 router.post('/',createCustomer);
-router.put("/update/:id",updateCustomer);
-router.delete("/delete/:id",deleteCustomer);
+// router.put("/update/:id",updateCustomer);
+// router.delete("/delete/:id",deleteCustomer);
+
+router
+        .route("/:id")
+        .put(updateCustomer)
+        .delete(deleteCustomer);
 
 module.exports = router;
