@@ -2,8 +2,8 @@ const customer = require('../models/customer');
 
 const getCustomers = async(req,res)=>{
     try{
-        const allProducts = await customer.find({});
-        return res.status(200).json(allProducts);
+        const customers = await customer.find({});
+        return res.status(200).json(customers);
     }catch(err){
         console.log(err);
         return res.status(500).json({

@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
-const employeeSchema = mongoose.Schema({
+const employeeSchema = new mongoose.Schema({
     firstName:{
         type:String
     },
     lastName:{
         type:String
     },
-    salay:{
+    salary:{
         type:String
     },
     department:{
