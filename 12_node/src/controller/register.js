@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const usermodel = require('../models/user')
-const jwt = require('.jsonwebtooken');
+const jwt = require('jsonwebtoken');
 async function register(req, res) {
     const { username, email, password, mobileNumber, role } = req.body;
-
+    
     try {
         const user = await usermodel.findOne({ email });
         if (!user) {
