@@ -12,4 +12,13 @@ router.get(
     });
 })
 
+router.get(
+    "/sample2",
+    auth.auth,
+    (req,res)=>{
+    return res.status(200).json({
+        message:"welcom user"
+    })
+})
+
 module.exports = router;
