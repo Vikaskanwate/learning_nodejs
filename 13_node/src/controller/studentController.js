@@ -55,10 +55,14 @@ const findStudentById = async (req,res)=>{
     }
 }
 
-const updateStudent = async ()=>{
+const updateStudent = async (req,res)=>{
     try{
+        const {id} = req.params;
         const {firstName,lastName,course} = req.body
-        
+        const updatedStudent = await student.findByIdAndUpdate(id,{firstName,lastName,course},{new : true});
+        return res.status(200).json({
+            student:updatedStudent
+        });
     }catch(err){
         console.log(err);
         res.status(500).json({
@@ -67,9 +71,31 @@ const updateStudent = async ()=>{
     }
 }
 
+const deleteStudent = async(req,res)=>{
+    try{
+        const {id} = req.params;
+        const deleted = await student.findByIdAndDelete(id);
+        if(!deleted){
+            return res.status(404).json({
+                status:"student not found"
+            });
+        }
+        return res.status(200).json({
+           status:"student deleted successfully" 
+        });
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({
+            success:false,
+            message:"Internal server error"
+        })
+    }
+} 
 
 module.exports = {
     getStudents,
     addStudent,
-    findStudentById
+    findStudentById,
+    updateStudent,
+    deleteStudent
 }
