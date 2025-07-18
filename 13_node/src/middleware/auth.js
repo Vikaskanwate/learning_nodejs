@@ -2,8 +2,15 @@ const jwt = require('jsonwebtoken');
 
 exports.auth = (req,res,next) =>{
     const authHeader = req.headers.authorization;
+    console.log(authHeader);
+    
+    if(typeof authHeader === "undefined"){
+        return res.status(401).json({
+            error:"Unauthorized, no token provided"
+        })
+    }
 
-    if(!authHeader && !authHeader.startsWith("Bearer ")){
+    if(!authHeader && !authHeader.startsWith('Bearer ')){
         return res.status(401).json({
             error:"Unauthorized, no token provided"
         })

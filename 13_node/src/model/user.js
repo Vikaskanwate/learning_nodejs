@@ -14,16 +14,15 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-userSchema.pre("save",async(next)=>{
-    const user = this;
-    if(user.isModified("password")){
-      user.password = await bcrypt.hash(user.password,8); 
+userSchema.pre('save',async function (next){
+    if(this.isModified("password")){
+        this.password = await bcrypt.hash(this.password,8);
     }
     next();
-})
+});
 
-userSchema.methods.comparePassword = async (password)=>{
-    return await bcrypt.compare(password,this.password);
+userSchema.methods.comparepassword = async function (password){
+    return bcrypt.compare(password,this.password);
 }
 
 module.exports = mongoose.model("User",userSchema);

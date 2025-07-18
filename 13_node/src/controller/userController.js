@@ -1,12 +1,14 @@
 const usermodel = require('../model/user');
 const jwt = require('jsonwebtoken');
+
 async function register(req,res){
     console.log(req.body);
+    const {username,password,role} = req.body;
     try{
-        const {username,password,role} = req.body;
         const user = await usermodel.findOne({username});
+        console.log(user);
         if(!user){
-            const newUser = new user({
+            const newUser = new usermodel({
                 username, 
                 password,
                 role
@@ -23,6 +25,7 @@ async function register(req,res){
             })
         }
     }catch(err){
+        console.log(err,"from user controller");
         res.status(500).json({
             error:err.message,
             success:false
@@ -35,7 +38,7 @@ async function login(req,res){
     try{
         const {username,password} = req.body;
         const user = await usermodel.findOne({username});
-        if(!user || !(await usermodel.comparepassword(password))){
+        if(!user || !(await user.comparepassword(password))){
             return res.status(400).send({
                 error:"Invalid username or password"
             });
@@ -45,10 +48,11 @@ async function login(req,res){
         )
         res.status(200).send({user:user,access:token,success:true});
     }catch(err){
+        console.log(err);
         res.status(500).json({
             msg:err.message,
             success:false
-        })
+        });
     }
 }
 
