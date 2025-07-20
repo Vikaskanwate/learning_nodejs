@@ -12,8 +12,8 @@ async function createProduct (req,res){
         category,
         price,
         available,
-        quantity,
         createdBy,
+        quantity,
     } = req.body;
 
     try{

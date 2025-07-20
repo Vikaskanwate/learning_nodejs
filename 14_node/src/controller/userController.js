@@ -2,8 +2,9 @@ const usermodel = require('../models/user');
 const jwt = require('jsonwebtoken')
 async function register(req, res) {
     const { username, password, email, mobileNumber, role } = req.body;
+    
     try {
-        const user = await usermodel.find({ username });
+        const user = await usermodel.findOne({ username });
         if (!user) {
             const newUser = new usermodel({
                 username,
@@ -36,7 +37,7 @@ async function register(req, res) {
 async function login(req, res) {
     console.log(req.body);
     try {
-        const { email, password } = req.body;
+        const { username, password } = req.body;
         const user = await usermodel.findOne({ username });
         if (!user || !(await user.comparepassword(password))) {
             res.status(400).send({ error: "invalid email or password" });

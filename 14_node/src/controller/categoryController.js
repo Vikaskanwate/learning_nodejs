@@ -4,7 +4,7 @@ const categorymodel = require('../models/category');
 async function addCategory(req, res) {
     console.log(req.body);
     const userid = req.user._id;
-    const { categodyname, createdBy } = req.body;
+    const { categoryname, createdBy } = req.body;
     try {
         const existingCategory = await categorymodel.findOne({ categoryname });
         if (existingCategory) {
@@ -23,6 +23,7 @@ async function addCategory(req, res) {
             })
         }
     } catch (err) {
+        console.log(err);
         res.status(500).json({
             msg: "Internal server error"
         })

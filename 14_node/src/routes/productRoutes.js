@@ -4,7 +4,7 @@ const authorise = require('../middleware/auth');
 const router = express.Router();
 
 router.post(
-    "/creatproduct",
+    "/createproduct",
     authorise.auth,
     authorise.admin,
     productController.createProduct
