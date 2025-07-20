@@ -78,7 +78,6 @@ async function getProductById(req,res){
 }
 
 async function getAllProduct(req,res){
-    console.log(req.body);
     try{
         const product = await productmodel.find()
         .populate("category","productname");
