@@ -13,17 +13,15 @@ router.post(
         auth.admin,
         getAllEmployee);
 router
-    .route
+    .route("/:id")
     .get(
-        "/:id",
         auth.auth
         ,getEmployeeById)
     .put(
-        "/:id",
         auth.auth,
         auth.admin,
         updateEmployee)
-    .delete("/:id",
+    .delete(
         auth.auth,
         auth.admin,
         deleteEmployee);
