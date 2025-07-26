@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 function auth(req,res,next){
     try{
         const authHeader = req.headers.authorization;
-        if(!authHeader && !(authHeader.startsWith("Bearer "))){
+        if(!authHeader || !authHeader.startsWith("Bearer ")){
             return res.status(401).json({
                 error:"Unauthorized, no token provided"
             })
@@ -11,7 +11,7 @@ function auth(req,res,next){
 
         const token = authHeader.split(" ")[1];
 
-        const decoded = jwt.verify(token,key);
+        const decoded = jwt.verify(token,"key");
         req.user = decoded;
         next();
     }catch(err){

@@ -1,10 +1,13 @@
 const usermodel = require('../modules/user');
-
+const jwt = require('jsonwebtoken');
 async function register(req,res){
     const {username,password,email,role} = req.body;
     try{
-        const user = usermodel.findOne({username});
+        const user = await usermodel.findOne({username});
+        console.log(user);
+        
         if(!user){
+            
             const newUser  =  new usermodel({
                 username,
                 password,
@@ -31,7 +34,7 @@ async function register(req,res){
 }
 
 async function login(req,res){
-    const {username,password,email,role} = req.body;
+    const {username,password,role} = req.body;
     try{
         const user =  await usermodel.findOne({username});
         if(!user || !(await user.comparepassword(password))){
