@@ -31,9 +31,27 @@ const createStudent = async (req,res)=>{
 }
 
 const getAllStudent = async (req,res)=>{
-    
+    try{
+        const students = await studentModel.find({});
+        if(students){
+            return res.status(200).json({
+                student : students,
+                success:true
+            })
+        }else{
+            return res.status(404).json({
+                msg:"no student registered"
+            })
+        }
+    }catch(err){
+        res.status(500).json({
+            msg:"Internal server error",
+            success:false
+        })
+    }
 }
 
 module.exports = {
-    createStudent
+    createStudent,
+    getAllStudent
 }
