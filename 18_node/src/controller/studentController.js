@@ -78,11 +78,38 @@ const getStudentById = async (req,res)=>{
             success:false
         })
     }
+}
 
+const updateStudent = async (req,res)=>{
+    const {name,course} = req.body;
+    const {id} = req.params;
+    try{
+        const existingStudent = await studentModel.findById(id);
+        if(!existingStudent){
+           return res.status(400).json({
+                msg:"student does not exist"
+           })
+        }
+        existingStudent.name = name || existingStudent.name;
+        existingStudent.course = course || existingStudent.course;
+
+        return res.status(200).json({
+            student: existingStudent,
+            msg:"student updated"
+        })
+    }catch(err){
+        console.log(err);
+        
+        res.status(500).json({
+            msg:"Internal server error",
+            success:false
+        }) 
+    }
 }
 
 module.exports = {
     createStudent,
     getAllStudent,
-    getStudentById
+    getStudentById,
+    updateStudent
 }
