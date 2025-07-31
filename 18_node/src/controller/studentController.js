@@ -23,6 +23,8 @@ const createStudent = async (req,res)=>{
         })
     
     }catch(err){
+        console.log(err);
+        
         res.status(500).json({
             msg:"Internal server error",
             success:false
@@ -44,6 +46,8 @@ const getAllStudent = async (req,res)=>{
             })
         }
     }catch(err){
+        console.log(err);
+        
         res.status(500).json({
             msg:"Internal server error",
             success:false
@@ -51,7 +55,34 @@ const getAllStudent = async (req,res)=>{
     }
 }
 
+const getStudentById = async (req,res)=>{
+    const {id} = req.params;
+    try{
+        const student = await studentModel.findById(id);
+        if(student){
+           return res.status(200).json({
+                student:student,
+                success:true
+           })
+        }else{
+            return res.status(404).json({
+                msg:"student with id not found",
+                success:true
+            })
+        }
+    }catch(err){
+        console.log(err);
+        
+        res.status(500).json({
+            msg:"Internal server error",
+            success:false
+        })
+    }
+
+}
+
 module.exports = {
     createStudent,
-    getAllStudent
+    getAllStudent,
+    getStudentById
 }
