@@ -99,7 +99,28 @@ const updateStudent = async (req,res)=>{
         })
     }catch(err){
         console.log(err);
-        
+        res.status(500).json({
+            msg:"Internal server error",
+            success:false
+        }) 
+    }
+}
+
+const deleteStudent = async (req,res)=>{
+    const {id} = req.params;
+    try{
+        const deletedStudent = await studentModel.findByIdAndDelete(id);
+        if(deletedStudent){
+            return res.status(200).json({
+                msg:"student deleted succssfully"
+            })
+        }else{
+            return res.status(400).json({
+                msg:"student not deleted"
+            })
+        }
+    }catch(err){
+        console.log(err);
         res.status(500).json({
             msg:"Internal server error",
             success:false
@@ -111,5 +132,6 @@ module.exports = {
     createStudent,
     getAllStudent,
     getStudentById,
-    updateStudent
+    updateStudent,
+    deleteStudent
 }
