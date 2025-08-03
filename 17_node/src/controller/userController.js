@@ -38,7 +38,7 @@ async function login(req,res){
     try{
         const user =  await usermodel.findOne({username});
         if(!user || !(await user.comparepassword(password))){
-            res.status(400).json({
+            res.status(401).json({
                 error:"Invalid username or password"
             });
         }
