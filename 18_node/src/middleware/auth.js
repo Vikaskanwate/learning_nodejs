@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-export const auth = async (req,res,next) =>{
+const auth = async (req,res,next) =>{
     try{
         const authHeader = req.headers.authorization;
         if(!authHeader || !authHeader.startsWith("Bearer ")){
@@ -20,7 +20,7 @@ export const auth = async (req,res,next) =>{
     }
 }
 
-export const admin = async () =>{
+const admin = async () =>{
     if(!req.user || !req.user.role){
         return res.status(403).json({
             msg:"Access Denied! no user role found."
@@ -33,3 +33,5 @@ export const admin = async () =>{
     }
     next();  
 }
+
+module.exports= {auth,admin}
