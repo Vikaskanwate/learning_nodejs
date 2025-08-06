@@ -52,16 +52,19 @@ const getEmployeeById = async (req,res)=>{
         const {id} = req.params;
         const emp = await employeemodel.findById(id);
         if(!emp){
-            return res.status.json({
+            return res.status(400).json({
                 msg:"employee not found"
             })
         }
-        return res.status.json({
+        return res.status(200).json({
             employee:emp,
             success:true
         })
     }catch(err){
-
+        console.log(err);
+        return res.status(500).json({
+            msg: "Internal server error"
+        })
     }
 }
 
