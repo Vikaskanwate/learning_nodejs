@@ -95,9 +95,31 @@ const updatEmployee  = async (req,res) =>{
     }
 }
 
+const deleteEmployee = async (req,res )=>{
+    try{
+        const {id}  = req.params;
+        const emp = await employeemodel.findByIdAndDelete(id);
+        if(!emp){
+            return res.status(400).json({
+                msg:"employee not found"
+            })
+        }else{
+            return res.status(200).json({
+                msg:"employee deleted successfully"
+            })
+        }
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({
+            msg: "Internal server error"
+        })
+    }
+}
+
 module.exports = {
     createEmployee,
     getAllEmployee,
     getEmployeeById,
-    updatEmployee
+    updatEmployee,
+    deleteEmployee
 }
