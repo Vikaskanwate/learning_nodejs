@@ -68,8 +68,36 @@ const getEmployeeById = async (req,res)=>{
     }
 }
 
+const updatEmployee  = async (req,res) =>{
+    try{
+        const {id} = req.params;
+        const { name, designation, department, salary } = req.body;
+        const emp = await employeemodel.findById(id);
+        if(!emp){
+            return res.status(400).json({
+                msg:"Employee does not exists"
+            })
+        }
+        emp.name = name || emp.name;
+        emp.designation = designation || emp.designation;
+        emp.department = department || emp.department;
+        emp.salary = salary || emp.salary;
+
+        return res.status(200).json({
+            employee:emp,
+            success:true
+        })
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({
+            msg: "Internal server error"
+        })
+    }
+}
+
 module.exports = {
     createEmployee,
     getAllEmployee,
-    getEmployeeById
+    getEmployeeById,
+    updatEmployee
 }
