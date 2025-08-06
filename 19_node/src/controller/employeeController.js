@@ -47,7 +47,26 @@ const getAllEmployee = async (req, res) => {
     }
 }
 
+const getEmployeeById = async (req,res)=>{
+    try{
+        const {id} = req.params;
+        const emp = await employeemodel.findById(id);
+        if(!emp){
+            return res.status.json({
+                msg:"employee not found"
+            })
+        }
+        return res.status.json({
+            employee:emp,
+            success:true
+        })
+    }catch(err){
+
+    }
+}
+
 module.exports = {
     createEmployee,
-    getAllEmployee
+    getAllEmployee,
+    getEmployeeById
 }
