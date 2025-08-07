@@ -18,16 +18,19 @@ router.get(
 router.get(
     "/:id",
     auth,
-    getEmployeeById);
+    getEmployeeById
+);
 router.put(
     "/:id",
     auth,
     manager,
-    updatEmployee);
+    updatEmployee
+);
 router.delete(
     "/:id",
     auth,
     manager,
-    deleteEmployee);
-    
+    deleteEmployee
+);
+
 module.exports = router;
