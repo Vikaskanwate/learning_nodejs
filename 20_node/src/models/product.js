@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
         type:String
     },
     instock:{
-        type:true
+        type:Boolean
     }
 })
 
