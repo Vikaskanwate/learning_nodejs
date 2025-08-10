@@ -1,11 +1,12 @@
 const productmodel = require('../models/product');
 
 const createProduct = async (req,res) =>{
-    const {name,price,instsock} = req.body;
+    const {name,price,instock} = req.body;
     try{
         const newProduct = new productmodel({
-            name,price,instsock
+            name,price,instock
         })
+        await newProduct.save();
         return res.status(200).json({
             product:newProduct,
             msg:"Product created successfully"
@@ -18,7 +19,43 @@ const createProduct = async (req,res) =>{
     }
 }
 
+const getAllProduct = async (req,res)=>{
+    try{
+        const product = await productmodel.find({});
+        return res.status(200).json({
+            product:product,
+            msg:"success"
+        })
+    }catch(err){
+        console.log(err);        
+        return res.status(500).json({
+            msg:"Internal server error"
+        })
+    }
+}
+
+const getProductById = async (req,res)=>{
+    const {id} = req.params;
+    try{
+        const product = await productmodel.findById(id);
+        if(product){
+            return res.status(200).json({
+                product:product
+            })
+        }
+        return res.status(404).json({
+            msg:"product not found"
+        })
+    }catch(err){
+        console.log(err);        
+        return res.status(500).json({
+            msg:"Internal server error"
+        })
+    }
+}
 
 module.exports = {
-    createProduct
+    createProduct,
+    getAllProduct,
+    getProductById
 }
