@@ -97,11 +97,37 @@ const updateVehical = async (req,res)=>{
             msg:"Internal server error"
         })
     }
- }
+}
+
+const deleteVehical = async (req,res)=>{
+    const {id} = req.params;
+    try {
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({
+                error:"Invalid ID format. Must be a 24-character hex string. "
+            })
+        }
+        const deleted = await vehicalmodel.findByIdAndDelete(id);
+        if(deleted){
+            return res.status(200).json({
+                msg:"deleted successfully"
+            })
+        }
+        return res.status(404).json({
+            msg:"vehical with id not found"
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            msg:"Internal server error"
+        })
+    }
+}
 
 module.exports = {
     createVehical,
     getAllVehicals,
     getVehicalById,
-    updateVehical
+    updateVehical,
+    deleteVehical
 }
