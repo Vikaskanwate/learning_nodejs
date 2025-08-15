@@ -72,8 +72,36 @@ const getVehicalById = async (req,res)=>{
     }
 }
 
+const updateVehical = async (req,res)=>{
+    const {vehicalName,type,brandName,price} = req.body;
+    const {id} = req.params;
+    try {
+        const vehical = await vehicalmodel.findById(id);
+        if(!vehical){
+            return res.status(404).json({
+                msg:"vehical with id does not exists"
+            })
+        }
+        vehical.vehicalName = vehicalName || vehical.vehicalName;
+        vehical.type = type || vehical.type;
+        vehical.brandName = brandName || vehical.brandName;
+        vehical.price  = price || vehical.price;
+        await vehical.save();
+        return res.status(200).json({
+            vehical:vehical,
+            msg:"vehical updated"
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            msg:"Internal server error"
+        })
+    }
+ }
+
 module.exports = {
     createVehical,
     getAllVehicals,
-    getVehicalById
+    getVehicalById,
+    updateVehical
 }
