@@ -1,5 +1,5 @@
 const vehicalmodel = require('../models/vehical');
-
+const mongoose = require('mongoose')
 const createVehical = async (req,res)=>{
     const {vehicalName,type,brandName,price} = req.body;
     try {
@@ -46,7 +46,34 @@ const getAllVehicals = async (req,res)=>{
     }
 }
 
+const getVehicalById = async (req,res)=>{
+    const {id} = req.params;
+    try {
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({
+                error:"Invalid ID format. Must be a 24-character hex string. "
+            })
+        }
+        const vehical = await vehicalmodel.findById(id);
+        if(vehical){
+            return res.status(200).json({
+                vehical:vehical,
+                success:true
+            })
+        }
+        return res.status(404).json({
+            msg:"vehical with id not found"
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            msg:"Internal server error"
+        })
+    }
+}
+
 module.exports = {
     createVehical,
-    getAllVehicals
+    getAllVehicals,
+    getVehicalById
 }
