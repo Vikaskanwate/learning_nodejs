@@ -35,3 +35,6 @@ const admin = async (req,res,next)=>{
     }
     next();
 }
+
+
+module.exports = {auth,admin}
