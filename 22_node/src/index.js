@@ -9,6 +9,6 @@ app.use(express.json());
 app.use("",employeeController);
 
 app.listen(3000,()=>{
-    console.log("Application is started on port 3000");
+      console.log("Application is started on port 3000");
     
 });
